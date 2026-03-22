@@ -29,12 +29,7 @@ function handleLogout(): void {
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
             >
-                <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -54,12 +49,7 @@ function handleLogout(): void {
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
             >
-                <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -68,6 +58,46 @@ function handleLogout(): void {
                     />
                 </svg>
                 Documents
+            </router-link>
+
+            <router-link
+                to="/templates"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                :class="
+                    $route.path.startsWith('/templates') && $route.path !== '/templates/my'
+                        ? 'bg-gray-100 text-gray-900'
+                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                "
+            >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.75"
+                        d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"
+                    />
+                </svg>
+                Template Gallery
+            </router-link>
+
+            <router-link
+                to="/templates/my"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                :class="
+                    $route.path === '/templates/my'
+                        ? 'bg-gray-100 text-gray-900'
+                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                "
+            >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.75"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                </svg>
+                My Templates
             </router-link>
         </nav>
 

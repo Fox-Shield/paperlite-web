@@ -36,6 +36,30 @@ const routes: RouteRecordRaw[] = [
         meta: { requiresAuth: true }
     },
     {
+        path: '/templates',
+        name: 'TemplatesGallery',
+        component: () => import('@/views/templates/TemplatesGalleryView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/templates/my',
+        name: 'MyTemplates',
+        component: () => import('@/views/templates/MyTemplatesView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/templates/new',
+        name: 'TemplateBuilder',
+        component: () => import('@/views/templates/TemplateBuilderView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/templates/:id/edit',
+        name: 'TemplateBuilderEdit',
+        component: () => import('@/views/templates/TemplateBuilderView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/documents',
         name: 'documents',
         component: () => import('@/views/documents/DocumentsView.vue'),
@@ -55,7 +79,7 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+router.beforeEach((to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const authStore = useAuthStore()
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
         next('/login')

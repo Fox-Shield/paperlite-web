@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { type AxiosError } from 'axios'
 
 const api = axios.create({
     baseURL: '/api',
@@ -15,7 +15,7 @@ api.interceptors.request.use((config) => {
 // Handle 401 — clear auth and redirect
 api.interceptors.response.use(
     (response) => response,
-    (error) => {
+    (error: AxiosError) => {
         if (error.response?.status === 401) {
             localStorage.removeItem('access_token')
             localStorage.removeItem('refresh_token')
