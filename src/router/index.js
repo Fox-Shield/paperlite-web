@@ -27,6 +27,36 @@ const routes = [
     component: () => import('@/views/WorkspaceView.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: '/templates',
+    name: 'TemplatesGallery',
+    component: () => import('@/views/templates/TemplatesGalleryView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/templates/my',
+    name: 'MyTemplates',
+    component: () => import('@/views/templates/MyTemplatesView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/templates/new',
+    name: 'TemplateBuilder',
+    component: () => import('@/views/templates/TemplateBuilderView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/templates/:id/edit',
+    name: 'TemplateBuilderEdit',
+    component: () => import('@/views/templates/TemplateBuilderView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/documents',
+    name: 'Documents',
+    component: () => import('@/views/documents/DocumentsView.vue'),
+    meta: { requiresAuth: true }
+  },
   { path: '/:pathMatch(.*)*', redirect: '/dashboard' }
 ]
 
