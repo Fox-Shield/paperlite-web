@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -17,8 +17,10 @@ async function handleLogin() {
     try {
         await authStore.login(email.value, password.value)
         router.push('/dashboard')
-    } catch (e) {
-        error.value = e.response?.data?.message || 'Invalid email or password.'
+    } catch (e: unknown) {
+        const msg = (e as { response?: { data?: { message?: string } } }).response?.data
+            ?.message
+        error.value = msg || 'Invalid email or password.'
     } finally {
         loading.value = false
     }

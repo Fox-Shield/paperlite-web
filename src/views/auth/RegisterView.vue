@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -29,9 +29,10 @@ async function handleRegister() {
             password.value
         )
         router.push('/dashboard')
-    } catch (e) {
-        error.value =
-            e.response?.data?.message || 'Registration failed. Please try again.'
+    } catch (e: unknown) {
+        const msg = (e as { response?: { data?: { message?: string } } }).response?.data
+            ?.message
+        error.value = msg || 'Registration failed. Please try again.'
     } finally {
         loading.value = false
     }
