@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteMeta } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 declare module 'vue-router' {
@@ -8,9 +7,6 @@ declare module 'vue-router' {
         requiresGuest?: boolean
     }
 }
-
-// Explicit type so RouteMeta import is used (satisfies the noUnusedLocals rule)
-type _RouteMeta = RouteMeta
 
 const router = createRouter({
     history: createWebHistory(),

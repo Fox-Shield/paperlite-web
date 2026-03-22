@@ -1,6 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { type AxiosError } from 'axios'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
@@ -25,7 +26,8 @@ async function handleRegister() {
     await authStore.register(firstName.value, lastName.value, email.value, password.value)
     router.push('/dashboard')
   } catch (e) {
-    error.value = e.response?.data?.message || 'Registration failed. Please try again.'
+    const axiosError = e as AxiosError<{ message?: string }>
+    error.value = axiosError.response?.data?.message ?? 'Registration failed. Please try again.'
   } finally {
     loading.value = false
   }
