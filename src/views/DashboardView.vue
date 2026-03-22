@@ -4,14 +4,14 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import AppSidebar from '@/components/AppSidebar.vue'
 
-const router = useRouter()
 const authStore = useAuthStore()
+const router = useRouter()
 
 const userName = computed(() => {
     const user = authStore.user
     if (!user) return 'there'
     if (user.firstName) return user.firstName
-    return user.name || 'there'
+    return user.email || 'there'
 })
 
 const quickActions = [
