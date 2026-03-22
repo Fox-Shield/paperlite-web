@@ -86,6 +86,10 @@ export const useGenerationStore = defineStore('generation', () => {
 
     function reset(): void {
         stopPolling()
+        if (saveDebounceTimer !== null) {
+            clearTimeout(saveDebounceTimer)
+            saveDebounceTimer = null
+        }
         fieldValues.value = []
         generationRequest.value = null
         isGenerating.value = false
