@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useGenerationStore } from '@/stores/generation'
 import GenerationStatusBanner from '@/components/GenerationStatusBanner.vue'
@@ -73,24 +73,19 @@ function buildSavePayload() {
     }
 }
 
+// Hide "Auto-saving..." 2s after the last field change
+let autoSaveTimer: ReturnType<typeof setTimeout> | null = null
+
 function onFieldChange(fv: FieldValue): void {
     validateField(fv)
-    // Trigger debounced auto-save
     generationStore.scheduleSave(documentId.value, buildSavePayload())
     showAutoSave.value = true
+    if (autoSaveTimer !== null) clearTimeout(autoSaveTimer)
+    autoSaveTimer = setTimeout(() => {
+        showAutoSave.value = false
+        autoSaveTimer = null
+    }, 2000)
 }
-
-// Hide "Auto-saving..." after store finishes (simple approach: 2s timeout)
-let autoSaveTimer: ReturnType<typeof setTimeout> | null = null
-watch(
-    () => generationStore.fieldValues,
-    () => {
-        if (autoSaveTimer !== null) clearTimeout(autoSaveTimer)
-        autoSaveTimer = setTimeout(() => {
-            showAutoSave.value = false
-        }, 2000)
-    }
-)
 
 async function handleSaveDraft(): Promise<void> {
     isSaving.value = true
@@ -127,6 +122,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
     generationStore.stopPolling()
+    if (autoSaveTimer !== null) clearTimeout(autoSaveTimer)
 })
 </script>
 
