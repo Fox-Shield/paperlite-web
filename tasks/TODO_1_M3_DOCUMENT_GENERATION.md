@@ -64,10 +64,30 @@ The project is currently plain JavaScript; we're adding TypeScript support along
 
 ## Bugs Found
 
-_none yet_
+- **TS7016 errors on JS imports** — `vue-tsc` couldn't resolve `@/services/api.js` and `@/stores/auth.js` from TypeScript files (implicit `any`). Fixed by adding `"allowJs": true` to `tsconfig.json`. This allows TypeScript to accept the existing `.js` modules without requiring a full JS → TS migration.
 
 ---
 
 ## Review
 
-_to be filled in after completion_
+All M3 deliverables implemented across 8 commits on `feature/m3-document-generation`.
+
+### What changed
+| File | Change |
+|---|---|
+| `package.json` | Added `typescript`, `vue-tsc`, `@types/node` devDeps; updated build script to `vue-tsc --noEmit && vite build` |
+| `tsconfig.json` | New — strict TS config with `allowJs`, path alias `@/*` |
+| `src/env.d.ts` | New — `*.vue` module declaration for vue-tsc |
+| `.prettierrc` | New — no semi, single quote, tabWidth 4, printWidth 90 |
+| `src/types/generation.ts` | New — FieldType, FieldValue, GenerationRequest, Document, Template, CreateDocumentRequest |
+| `src/stores/generation.ts` | New — Pinia store with polling (2s), debounced save (1.5s), download |
+| `src/services/generationApi.ts` | New — typed API wrapper for 5 generation endpoints |
+| `src/views/documents/DocumentsView.vue` | New — list page with status badges, New Document modal, empty state |
+| `src/views/documents/DocumentDetailView.vue` | New — two-panel field form + mock preview, validation, action bar |
+| `src/components/GenerationStatusBanner.vue` | New — stateless banner for PENDING/COMPLETED/FAILED states |
+| `src/components/AppSidebar.vue` | New — sidebar with Dashboard + Documents nav, sign-out |
+| `src/router/index.js` | Updated — added `/documents` and `/documents/:id` routes |
+| `docs/frontend-architecture.md` | New — full M3 architecture documentation |
+
+### PR
+https://github.com/Fox-Shield/paperlite-web/pull/64 — Closes #19, #20, #21, #23, #24, #25
