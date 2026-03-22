@@ -2,7 +2,12 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
-import type { Document, Template, CreateDocumentRequest, DocumentStatus } from '@/types/generation'
+import type {
+    Document,
+    Template,
+    CreateDocumentRequest,
+    DocumentStatus
+} from '@/types/generation'
 
 const router = useRouter()
 
@@ -20,21 +25,21 @@ const statusColors: Record<DocumentStatus, string> = {
     DRAFT: 'bg-gray-100 text-gray-600',
     PROCESSING: 'bg-yellow-100 text-yellow-700',
     READY: 'bg-green-100 text-green-700',
-    ERROR: 'bg-red-100 text-red-600',
+    ERROR: 'bg-red-100 text-red-600'
 }
 
 const statusLabels: Record<DocumentStatus, string> = {
     DRAFT: 'Draft',
     PROCESSING: 'Processing',
     READY: 'Ready',
-    ERROR: 'Error',
+    ERROR: 'Error'
 }
 
 function formatDate(iso: string): string {
     return new Date(iso).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
-        year: 'numeric',
+        year: 'numeric'
     })
 }
 
@@ -67,7 +72,7 @@ async function handleCreate(): Promise<void> {
     try {
         const body: CreateDocumentRequest = {
             name: newDocName.value.trim(),
-            templateId: newDocTemplateId.value,
+            templateId: newDocTemplateId.value
         }
         const { data } = await api.post<Document>('/documents', body)
         documents.value.unshift(data)
@@ -109,7 +114,12 @@ onMounted(loadDocuments)
                     @click="openNewModal"
                     class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
                 >
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
@@ -181,7 +191,10 @@ onMounted(loadDocuments)
             </div>
 
             <!-- Document list -->
-            <div v-else class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div
+                v-else
+                class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
+            >
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="border-b border-gray-100">
@@ -218,7 +231,9 @@ onMounted(loadDocuments)
                             <td class="px-5 py-3.5 font-medium text-gray-900">
                                 {{ doc.name }}
                             </td>
-                            <td class="px-5 py-3.5 text-gray-500">{{ doc.templateName }}</td>
+                            <td class="px-5 py-3.5 text-gray-500">
+                                {{ doc.templateName }}
+                            </td>
                             <td class="px-5 py-3.5">
                                 <span
                                     class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"

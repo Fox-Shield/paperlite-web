@@ -1,6 +1,17 @@
 {
+    "$schema": "https://json.schemastore.org/prettierrc",
     "semi": false,
-    "singleQuote": true,
     "tabWidth": 4,
-    "printWidth": 90
+    "singleQuote": true,
+    "printWidth": 120,
+    "trailingComma": "none",
+    "arrowParens": "always",
+    "overrides": [
+        {
+            "files": "*.vue",
+            "options": {
+                "printWidth": 90
+            }
+        }
+    ]
 }

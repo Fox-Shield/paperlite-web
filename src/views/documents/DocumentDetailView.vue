@@ -68,8 +68,8 @@ function buildSavePayload() {
     return {
         fieldValues: generationStore.fieldValues.map((fv) => ({
             templateFieldId: fv.templateFieldId,
-            value: localValues.value[fv.templateFieldId] ?? '',
-        })),
+            value: localValues.value[fv.templateFieldId] ?? ''
+        }))
     }
 }
 
@@ -89,7 +89,7 @@ watch(
         autoSaveTimer = setTimeout(() => {
             showAutoSave.value = false
         }, 2000)
-    },
+    }
 )
 
 async function handleSaveDraft(): Promise<void> {
@@ -139,7 +139,12 @@ onUnmounted(() => {
                     @click="goBack"
                     class="text-sm text-gray-400 hover:text-gray-900 transition-colors flex items-center gap-1"
                 >
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
@@ -179,7 +184,9 @@ onUnmounted(() => {
             <!-- Left panel — field form (40%) -->
             <div class="w-2/5 shrink-0">
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                    <h2 class="text-sm font-semibold text-gray-700 mb-5">Fill in fields</h2>
+                    <h2 class="text-sm font-semibold text-gray-700 mb-5">
+                        Fill in fields
+                    </h2>
 
                     <div
                         v-if="generationStore.fieldValues.length === 0"
@@ -195,7 +202,9 @@ onUnmounted(() => {
                         >
                             <label class="block text-xs font-medium text-gray-600 mb-1">
                                 {{ fv.fieldName }}
-                                <span v-if="fv.required" class="text-red-400 ml-0.5">*</span>
+                                <span v-if="fv.required" class="text-red-400 ml-0.5"
+                                    >*</span
+                                >
                             </label>
 
                             <!-- TEXT -->
@@ -204,7 +213,11 @@ onUnmounted(() => {
                                 v-model="localValues[fv.templateFieldId]"
                                 type="text"
                                 class="w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                                :class="getError(fv.templateFieldId) ? 'border-red-300' : 'border-gray-200'"
+                                :class="
+                                    getError(fv.templateFieldId)
+                                        ? 'border-red-300'
+                                        : 'border-gray-200'
+                                "
                                 @input="onFieldChange(fv)"
                             />
 
@@ -214,7 +227,11 @@ onUnmounted(() => {
                                 v-model="localValues[fv.templateFieldId]"
                                 type="number"
                                 class="w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                                :class="getError(fv.templateFieldId) ? 'border-red-300' : 'border-gray-200'"
+                                :class="
+                                    getError(fv.templateFieldId)
+                                        ? 'border-red-300'
+                                        : 'border-gray-200'
+                                "
                                 @input="onFieldChange(fv)"
                             />
 
@@ -224,7 +241,11 @@ onUnmounted(() => {
                                 v-model="localValues[fv.templateFieldId]"
                                 type="date"
                                 class="w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                                :class="getError(fv.templateFieldId) ? 'border-red-300' : 'border-gray-200'"
+                                :class="
+                                    getError(fv.templateFieldId)
+                                        ? 'border-red-300'
+                                        : 'border-gray-200'
+                                "
                                 @change="onFieldChange(fv)"
                             />
 
@@ -256,7 +277,11 @@ onUnmounted(() => {
                                 v-model="localValues[fv.templateFieldId]"
                                 rows="3"
                                 class="w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent resize-none"
-                                :class="getError(fv.templateFieldId) ? 'border-red-300' : 'border-gray-200'"
+                                :class="
+                                    getError(fv.templateFieldId)
+                                        ? 'border-red-300'
+                                        : 'border-gray-200'
+                                "
                                 @input="onFieldChange(fv)"
                             />
 
@@ -265,7 +290,11 @@ onUnmounted(() => {
                                 v-else-if="fv.fieldType === 'SELECT'"
                                 v-model="localValues[fv.templateFieldId]"
                                 class="w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                                :class="getError(fv.templateFieldId) ? 'border-red-300' : 'border-gray-200'"
+                                :class="
+                                    getError(fv.templateFieldId)
+                                        ? 'border-red-300'
+                                        : 'border-gray-200'
+                                "
                                 @change="onFieldChange(fv)"
                             >
                                 <option value="" disabled>Select…</option>
@@ -317,7 +346,9 @@ onUnmounted(() => {
                         class="border border-dashed border-gray-200 rounded-xl p-5 space-y-3"
                     >
                         <div class="flex items-center gap-2 mb-4">
-                            <div class="w-6 h-6 rounded bg-gray-900 flex items-center justify-center">
+                            <div
+                                class="w-6 h-6 rounded bg-gray-900 flex items-center justify-center"
+                            >
                                 <svg
                                     class="w-3 h-3 text-white"
                                     fill="none"
@@ -348,12 +379,11 @@ onUnmounted(() => {
                             <span
                                 class="text-sm text-gray-900"
                                 :class="{
-                                    'text-gray-300 italic': !localValues[fv.templateFieldId],
+                                    'text-gray-300 italic':
+                                        !localValues[fv.templateFieldId]
                                 }"
                             >
-                                {{
-                                    localValues[fv.templateFieldId] || '—'
-                                }}
+                                {{ localValues[fv.templateFieldId] || '—' }}
                             </span>
                         </div>
                     </div>

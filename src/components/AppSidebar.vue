@@ -29,7 +29,12 @@ function handleLogout(): void {
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
             >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -49,7 +54,12 @@ function handleLogout(): void {
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
             >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"

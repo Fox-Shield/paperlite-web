@@ -68,7 +68,12 @@ const emit = defineEmits<{
                 @click="emit('download')"
                 class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-green-700 text-white text-xs font-medium hover:bg-green-800 transition-colors"
             >
-                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                    class="w-3.5 h-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"

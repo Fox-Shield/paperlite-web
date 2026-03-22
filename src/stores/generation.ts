@@ -17,10 +17,7 @@ export const useGenerationStore = defineStore('generation', () => {
         fieldValues.value = data
     }
 
-    async function saveFieldValues(
-        documentId: number,
-        values: SaveFieldValuesRequest,
-    ): Promise<void> {
+    async function saveFieldValues(documentId: number, values: SaveFieldValuesRequest): Promise<void> {
         await generationApi.saveFieldValues(documentId, values)
     }
 
@@ -106,6 +103,6 @@ export const useGenerationStore = defineStore('generation', () => {
         pollStatus,
         stopPolling,
         downloadPdf,
-        reset,
+        reset
     }
 })
