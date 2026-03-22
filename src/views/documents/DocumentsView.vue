@@ -191,11 +191,6 @@ onMounted(() => documentStore.fetchDocuments())
     }
   }
 
-  @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-
   .empty-state {
     text-align: center;
     padding: 100px 20px;
@@ -340,5 +335,10 @@ onMounted(() => documentStore.fetchDocuments())
       }
     }
   }
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 </style>
