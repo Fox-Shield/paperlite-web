@@ -27,6 +27,18 @@ const routes = [
     component: () => import('@/views/WorkspaceView.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: '/documents',
+    name: 'documents',
+    component: () => import('@/views/documents/DocumentsView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/documents/:id',
+    name: 'document-detail',
+    component: () => import('@/views/documents/DocumentDetailView.vue'),
+    meta: { requiresAuth: true }
+  },
   { path: '/:pathMatch(.*)*', redirect: '/dashboard' }
 ]
 
