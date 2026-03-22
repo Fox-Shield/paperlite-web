@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -8,80 +8,92 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const userName = computed(() => {
-  const user = authStore.user
-  if (!user) return 'there'
-  if (user.firstName) return user.firstName
-  return user.name || 'there'
+    const user = authStore.user
+    if (!user) return 'there'
+    if (user.firstName) return user.firstName
+    return user.name || 'there'
 })
 
 const quickActions = [
-  {
-    title: 'Browse Templates',
-    desc: 'Explore starter templates for contracts, leases, proposals and more',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`,
-    path: '/templates',
-    color: '#4f46e5'
-  },
-  {
-    title: 'My Templates',
-    desc: "View and manage templates you've created",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
-    path: '/templates/my',
-    color: '#0891b2'
-  },
-  {
-    title: 'My Documents',
-    desc: "Access documents you've uploaded or generated",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
-    path: '/documents',
-    color: '#059669'
-  }
+    {
+        title: 'Browse Templates',
+        desc: 'Explore starter templates for contracts, leases, proposals and more',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`,
+        path: '/templates',
+        color: '#4f46e5'
+    },
+    {
+        title: 'My Templates',
+        desc: "View and manage templates you've created",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+        path: '/templates/my',
+        color: '#0891b2'
+    },
+    {
+        title: 'My Documents',
+        desc: "Access documents you've uploaded or generated",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+        path: '/documents',
+        color: '#059669'
+    }
 ]
 </script>
 
 <template>
-  <div class="dashboard-layout">
-    <AppSidebar />
+    <div class="dashboard-layout">
+        <AppSidebar />
 
-    <main class="dashboard-main">
-      <header class="page-header">
-        <div>
-          <h1 class="page-title">Welcome back, {{ userName }} 👋</h1>
-          <p class="page-subtitle">Here's what you can do today</p>
-        </div>
-      </header>
+        <main class="dashboard-main">
+            <header class="page-header">
+                <div>
+                    <h1 class="page-title">Welcome back, {{ userName }} 👋</h1>
+                    <p class="page-subtitle">Here's what you can do today</p>
+                </div>
+            </header>
 
-      <section class="quick-actions">
-        <h2 class="section-title">Quick Actions</h2>
-        <div class="actions-grid">
-          <button
-            v-for="action in quickActions"
-            :key="action.path"
-            class="action-card"
-            @click="router.push(action.path)"
-          >
-            <div class="action-icon" :style="{ background: action.color + '1a', color: action.color }">
-              <span v-html="action.icon" />
-            </div>
-            <div class="action-body">
-              <p class="action-title">{{ action.title }}</p>
-              <p class="action-desc">{{ action.desc }}</p>
-            </div>
-            <svg class="action-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
-          </button>
-        </div>
-      </section>
+            <section class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="actions-grid">
+                    <button
+                        v-for="action in quickActions"
+                        :key="action.path"
+                        class="action-card"
+                        @click="router.push(action.path)"
+                    >
+                        <div
+                            class="action-icon"
+                            :style="{ background: action.color + '1a', color: action.color }"
+                        >
+                            <span v-html="action.icon" />
+                        </div>
+                        <div class="action-body">
+                            <p class="action-title">{{ action.title }}</p>
+                            <p class="action-desc">{{ action.desc }}</p>
+                        </div>
+                        <svg
+                            class="action-arrow"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    </button>
+                </div>
+            </section>
 
-      <section class="recent-activity">
-        <h2 class="section-title">Recent Activity</h2>
-        <div class="activity-empty">
-          <p>No recent activity yet. Start by browsing templates or creating your first document.</p>
-        </div>
-      </section>
-    </main>
-  </div>
+            <section class="recent-activity">
+                <h2 class="section-title">Recent Activity</h2>
+                <div class="activity-empty">
+                    <p>No recent activity yet. Start by browsing templates or creating your first document.</p>
+                </div>
+            </section>
+        </main>
+    </div>
 </template>
 
 <style scoped>
