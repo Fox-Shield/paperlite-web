@@ -1,13 +1,13 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useTemplateStore } from '@/stores/templates'
+import { useTemplatesStore } from '@/stores/templates'
 import AppSidebar from '@/components/AppSidebar.vue'
 import FieldTypeIcon from '@/components/FieldTypeIcon.vue'
 
 const route = useRoute()
 const router = useRouter()
-const templateStore = useTemplateStore()
+const templateStore = useTemplatesStore()
 
 const isEditing = computed(() => !!route.params.id)
 const saving = ref(false)

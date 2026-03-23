@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useTemplateStore } from '@/stores/templates'
+import { useTemplatesStore } from '@/stores/templates'
 import AppSidebar from '@/components/AppSidebar.vue'
 import TemplateCard from '@/components/TemplateCard.vue'
 
 const router = useRouter()
-const templateStore = useTemplateStore()
+const templateStore = useTemplatesStore()
 
 const searchQuery = ref('')
 

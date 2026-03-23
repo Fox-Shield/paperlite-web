@@ -10,6 +10,12 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
+    build: {
+        // lightningcss (default in Vite 8 + rolldown) misparses @keyframes
+        // blocks emitted by @tailwindcss/vite. Disable CSS minification
+        // until the upstream bug is resolved.
+        cssMinify: false
+    },
     server: {
         port: 5173,
         proxy: {

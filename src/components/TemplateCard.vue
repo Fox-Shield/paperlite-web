@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { useTemplateStore } from '@/stores/templates'
+import { useTemplatesStore } from '@/stores/templates'
 
 const props = defineProps({
   template: {
@@ -16,7 +16,7 @@ const props = defineProps({
 const emit = defineEmits(['deleted'])
 
 const router = useRouter()
-const templateStore = useTemplateStore()
+const templateStore = useTemplatesStore()
 
 const categoryColors = {
   Contracts: { bg: '#eff6ff', text: '#1d4ed8' },
