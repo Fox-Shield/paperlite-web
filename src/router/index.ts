@@ -71,6 +71,35 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/documents/DocumentDetailView.vue'),
         meta: { requiresAuth: true }
     },
+    {
+        path: '/intake-forms',
+        name: 'IntakeForms',
+        component: () => import('@/views/intake/IntakeFormsView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/intake-forms/new',
+        name: 'IntakeFormBuilder',
+        component: () => import('@/views/intake/IntakeFormBuilderView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/intake-forms/:id/edit',
+        name: 'IntakeFormBuilderEdit',
+        component: () => import('@/views/intake/IntakeFormBuilderView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/intake-forms/:id/submissions',
+        name: 'IntakeFormSubmissions',
+        component: () => import('@/views/intake/IntakeFormSubmissionsView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/forms/:formId',
+        name: 'PublicIntakeForm',
+        component: () => import('@/views/intake/PublicIntakeFormView.vue')
+    },
     { path: '/:pathMatch(.*)*', redirect: '/dashboard' }
 ]
 

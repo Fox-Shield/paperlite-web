@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useDocumentStore } from '@/stores/documents'
+import { useDocumentsStore } from '@/stores/documents'
 import AppSidebar from '@/components/AppSidebar.vue'
 
-const documentStore = useDocumentStore()
+const documentStore = useDocumentsStore()
 
 function formatDate(dateStr) {
   if (!dateStr) return '—'
