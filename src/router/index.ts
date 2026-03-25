@@ -66,6 +66,12 @@ const routes: RouteRecordRaw[] = [
         meta: { requiresAuth: true }
     },
     {
+        path: '/documents/shared-with-me',
+        name: 'shared-with-me',
+        component: () => import('@/views/documents/SharedWithMeView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/documents/:id',
         name: 'document-detail',
         component: () => import('@/views/documents/DocumentDetailView.vue'),
