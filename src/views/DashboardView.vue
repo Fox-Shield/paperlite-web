@@ -62,7 +62,10 @@ const quickActions = [
                     >
                         <div
                             class="action-icon"
-                            :style="{ background: action.color + '1a', color: action.color }"
+                            :style="{
+                                background: action.color + '1a',
+                                color: action.color
+                            }"
                         >
                             <span v-html="action.icon" />
                         </div>
@@ -89,7 +92,10 @@ const quickActions = [
             <section class="recent-activity">
                 <h2 class="section-title">Recent Activity</h2>
                 <div class="activity-empty">
-                    <p>No recent activity yet. Start by browsing templates or creating your first document.</p>
+                    <p>
+                        No recent activity yet. Start by browsing templates or creating
+                        your first document.
+                    </p>
                 </div>
             </section>
         </main>
@@ -98,127 +104,127 @@ const quickActions = [
 
 <style scoped>
 .dashboard-layout {
-  display: flex;
-  min-height: 100vh;
-  background: #f9fafb;
+    display: flex;
+    min-height: 100vh;
+    background: #f9fafb;
 }
 
 .dashboard-main {
-  flex: 1;
-  padding: 32px;
-  overflow-y: auto;
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
 
-  .page-header {
-    margin-bottom: 32px;
+    .page-header {
+        margin-bottom: 32px;
 
-    .page-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: #111827;
-      margin-bottom: 4px;
-    }
-
-    .page-subtitle {
-      font-size: 14px;
-      color: #6b7280;
-    }
-  }
-
-  .section-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: #9ca3af;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 12px;
-  }
-
-  .quick-actions {
-    margin-bottom: 40px;
-
-    .actions-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      max-width: 640px;
-
-      .action-card {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 16px 20px;
-        background: white;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        cursor: pointer;
-        text-align: left;
-        transition: all 0.15s;
-
-        &:hover {
-          border-color: #c7d2fe;
-          box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08);
-          transform: translateX(2px);
-        }
-
-        .action-icon {
-          width: 44px;
-          height: 44px;
-          border-radius: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-
-          :deep(svg) {
-            width: 20px;
-            height: 20px;
-          }
-        }
-
-        .action-body {
-          flex: 1;
-
-          .action-title {
-            font-size: 15px;
-            font-weight: 600;
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
             color: #111827;
-            margin-bottom: 2px;
-          }
+            margin-bottom: 4px;
+        }
 
-          .action-desc {
-            font-size: 13px;
+        .page-subtitle {
+            font-size: 14px;
             color: #6b7280;
-            line-height: 1.4;
-          }
         }
-
-        .action-arrow {
-          width: 18px;
-          height: 18px;
-          color: #d1d5db;
-          flex-shrink: 0;
-          transition: color 0.15s;
-        }
-
-        &:hover .action-arrow {
-          color: #4f46e5;
-        }
-      }
     }
-  }
 
-  .recent-activity {
-    max-width: 640px;
-
-    .activity-empty {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 32px 24px;
-      text-align: center;
-      color: #9ca3af;
-      font-size: 14px;
+    .section-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 12px;
     }
-  }
+
+    .quick-actions {
+        margin-bottom: 40px;
+
+        .actions-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 640px;
+
+            .action-card {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 16px 20px;
+                background: white;
+                border: 1px solid #e5e7eb;
+                border-radius: 12px;
+                cursor: pointer;
+                text-align: left;
+                transition: all 0.15s;
+
+                &:hover {
+                    border-color: #c7d2fe;
+                    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08);
+                    transform: translateX(2px);
+                }
+
+                .action-icon {
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+
+                    :deep(svg) {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                .action-body {
+                    flex: 1;
+
+                    .action-title {
+                        font-size: 15px;
+                        font-weight: 600;
+                        color: #111827;
+                        margin-bottom: 2px;
+                    }
+
+                    .action-desc {
+                        font-size: 13px;
+                        color: #6b7280;
+                        line-height: 1.4;
+                    }
+                }
+
+                .action-arrow {
+                    width: 18px;
+                    height: 18px;
+                    color: #d1d5db;
+                    flex-shrink: 0;
+                    transition: color 0.15s;
+                }
+
+                &:hover .action-arrow {
+                    color: #4f46e5;
+                }
+            }
+        }
+    }
+
+    .recent-activity {
+        max-width: 640px;
+
+        .activity-empty {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 32px 24px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+    }
 }
 </style>

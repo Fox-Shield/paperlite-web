@@ -174,46 +174,27 @@ const accentStyle = computed(() => ({
 
 <template>
     <div
-        class="min-h-screen bg-gray-50 flex flex-col
-            items-center py-10 px-4"
+        class="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4"
         :style="accentStyle"
     >
         <!-- Loading -->
-        <div
-            v-if="isLoading"
-            class="w-full max-w-xl space-y-4"
-        >
-            <div
-                class="h-24 bg-white rounded-2xl border
-                    border-gray-100 animate-pulse"
-            />
-            <div
-                class="h-48 bg-white rounded-2xl border
-                    border-gray-100 animate-pulse"
-            />
+        <div v-if="isLoading" class="w-full max-w-xl space-y-4">
+            <div class="h-24 bg-white rounded-2xl border border-gray-100 animate-pulse" />
+            <div class="h-48 bg-white rounded-2xl border border-gray-100 animate-pulse" />
         </div>
 
         <!-- Error -->
-        <div
-            v-else-if="loadError"
-            class="w-full max-w-xl text-center py-24"
-        >
+        <div v-else-if="loadError" class="w-full max-w-xl text-center py-24">
             <p class="text-sm text-red-500">{{ loadError }}</p>
         </div>
 
         <!-- Success -->
-        <div
-            v-else-if="isSubmitted"
-            class="w-full max-w-xl"
-        >
+        <div v-else-if="isSubmitted" class="w-full max-w-xl">
             <div
-                class="bg-white rounded-2xl border border-gray-100
-                    shadow-sm p-10 flex flex-col items-center
-                    text-center"
+                class="bg-white rounded-2xl border border-gray-100 shadow-sm p-10 flex flex-col items-center text-center"
             >
                 <div
-                    class="w-14 h-14 rounded-full flex items-center
-                        justify-center mb-5"
+                    class="w-14 h-14 rounded-full flex items-center justify-center mb-5"
                     style="background: var(--accent)"
                 >
                     <svg
@@ -230,58 +211,33 @@ const accentStyle = computed(() => ({
                         />
                     </svg>
                 </div>
-                <h1
-                    class="text-xl font-semibold text-gray-900 mb-2"
-                >
+                <h1 class="text-xl font-semibold text-gray-900 mb-2">
                     Thank you, {{ submitterName }}!
                 </h1>
                 <p class="text-sm text-gray-500">
-                    Your form has been submitted. We'll be in touch
-                    soon.
+                    Your form has been submitted. We'll be in touch soon.
                 </p>
             </div>
         </div>
 
         <!-- Form -->
-        <div
-            v-else-if="form"
-            class="w-full max-w-xl space-y-4"
-        >
+        <div v-else-if="form" class="w-full max-w-xl space-y-4">
             <!-- Header card -->
             <div
-                class="bg-white rounded-2xl border border-gray-100
-                    shadow-sm overflow-hidden"
+                class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
             >
-                <div
-                    class="h-2"
-                    style="background: var(--accent)"
-                />
+                <div class="h-2" style="background: var(--accent)" />
                 <div class="p-6">
-                    <div
-                        v-if="form.logoUrl"
-                        class="mb-4"
-                    >
-                        <img
-                            :src="form.logoUrl"
-                            alt="Logo"
-                            class="h-10 object-contain"
-                        />
+                    <div v-if="form.logoUrl" class="mb-4">
+                        <img :src="form.logoUrl" alt="Logo" class="h-10 object-contain" />
                     </div>
-                    <h1
-                        class="text-xl font-semibold text-gray-900"
-                    >
+                    <h1 class="text-xl font-semibold text-gray-900">
                         {{ form.title }}
                     </h1>
-                    <p
-                        v-if="form.welcomeMessage"
-                        class="mt-2 text-sm text-gray-500"
-                    >
+                    <p v-if="form.welcomeMessage" class="mt-2 text-sm text-gray-500">
                         {{ form.welcomeMessage }}
                     </p>
-                    <p
-                        v-else-if="form.description"
-                        class="mt-2 text-sm text-gray-500"
-                    >
+                    <p v-else-if="form.description" class="mt-2 text-sm text-gray-500">
                         {{ form.description }}
                     </p>
                     <div
@@ -305,11 +261,7 @@ const accentStyle = computed(() => ({
                             />
                         </svg>
                         <span class="text-xs text-gray-400">
-                            {{
-                                isSaving
-                                    ? 'Saving…'
-                                    : 'Progress is saved automatically'
-                            }}
+                            {{ isSaving ? 'Saving…' : 'Progress is saved automatically' }}
                         </span>
                     </div>
                 </div>
@@ -317,30 +269,17 @@ const accentStyle = computed(() => ({
 
             <!-- Fields card -->
             <div
-                class="bg-white rounded-2xl border border-gray-100
-                    shadow-sm p-6 space-y-5"
+                class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5"
             >
-                <template
-                    v-for="field in form.fields"
-                    :key="field.id"
-                >
+                <template v-for="field in form.fields" :key="field.id">
                     <div v-if="isFieldVisible(field)">
-                        <label
-                            class="block text-sm font-medium
-                                text-gray-700 mb-1"
-                        >
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
                             {{ field.label }}
-                            <span
-                                v-if="field.isRequired"
-                                class="text-red-400 ml-0.5"
-                            >
+                            <span v-if="field.isRequired" class="text-red-400 ml-0.5">
                                 *
                             </span>
                         </label>
-                        <p
-                            v-if="field.helpText"
-                            class="text-xs text-gray-400 mb-1.5"
-                        >
+                        <p v-if="field.helpText" class="text-xs text-gray-400 mb-1.5">
                             {{ field.helpText }}
                         </p>
 
@@ -349,10 +288,7 @@ const accentStyle = computed(() => ({
                             v-if="field.fieldType === 'TEXT'"
                             v-model="fieldValues[field.id]"
                             type="text"
-                            class="w-full rounded-xl border
-                                border-gray-200 px-3.5 py-2.5 text-sm
-                                focus:outline-none focus:ring-2
-                                focus:border-transparent"
+                            class="w-full rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
                             style="--tw-ring-color: var(--accent)"
                         />
 
@@ -361,10 +297,7 @@ const accentStyle = computed(() => ({
                             v-else-if="field.fieldType === 'NUMBER'"
                             v-model="fieldValues[field.id]"
                             type="number"
-                            class="w-full rounded-xl border
-                                border-gray-200 px-3.5 py-2.5 text-sm
-                                focus:outline-none focus:ring-2
-                                focus:border-transparent"
+                            class="w-full rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
                             style="--tw-ring-color: var(--accent)"
                         />
 
@@ -373,26 +306,21 @@ const accentStyle = computed(() => ({
                             v-else-if="field.fieldType === 'DATE'"
                             v-model="fieldValues[field.id]"
                             type="date"
-                            class="w-full rounded-xl border
-                                border-gray-200 px-3.5 py-2.5 text-sm
-                                focus:outline-none focus:ring-2
-                                focus:border-transparent"
+                            class="w-full rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
                             style="--tw-ring-color: var(--accent)"
                         />
 
                         <!-- BOOLEAN -->
                         <label
                             v-else-if="field.fieldType === 'BOOLEAN'"
-                            class="flex items-center gap-2.5
-                                cursor-pointer"
+                            class="flex items-center gap-2.5 cursor-pointer"
                         >
                             <input
                                 v-model="fieldValues[field.id]"
                                 type="checkbox"
                                 true-value="true"
                                 false-value="false"
-                                class="w-4 h-4 rounded border-gray-300
-                                    focus:ring-2"
+                                class="w-4 h-4 rounded border-gray-300 focus:ring-2"
                                 style="
                                     accent-color: var(--accent);
                                     --tw-ring-color: var(--accent);
@@ -405,15 +333,10 @@ const accentStyle = computed(() => ({
 
                         <!-- TEXTAREA -->
                         <textarea
-                            v-else-if="
-                                field.fieldType === 'TEXTAREA'
-                            "
+                            v-else-if="field.fieldType === 'TEXTAREA'"
                             v-model="fieldValues[field.id]"
                             rows="4"
-                            class="w-full rounded-xl border
-                                border-gray-200 px-3.5 py-2.5 text-sm
-                                focus:outline-none focus:ring-2
-                                focus:border-transparent resize-none"
+                            class="w-full rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent resize-none"
                             style="--tw-ring-color: var(--accent)"
                         />
 
@@ -421,20 +344,11 @@ const accentStyle = computed(() => ({
                         <select
                             v-else-if="field.fieldType === 'SELECT'"
                             v-model="fieldValues[field.id]"
-                            class="w-full rounded-xl border
-                                border-gray-200 px-3.5 py-2.5 text-sm
-                                focus:outline-none focus:ring-2
-                                focus:border-transparent"
+                            class="w-full rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
                             style="--tw-ring-color: var(--accent)"
                         >
-                            <option value="" disabled>
-                                Select…
-                            </option>
-                            <option
-                                v-for="opt in field.options"
-                                :key="opt"
-                                :value="opt"
-                            >
+                            <option value="" disabled>Select…</option>
+                            <option v-for="opt in field.options" :key="opt" :value="opt">
                                 {{ opt }}
                             </option>
                         </select>
@@ -444,20 +358,12 @@ const accentStyle = computed(() => ({
 
             <!-- Submitter info + submit -->
             <div
-                class="bg-white rounded-2xl border border-gray-100
-                    shadow-sm p-6 space-y-4"
+                class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4"
             >
-                <h2
-                    class="text-sm font-semibold text-gray-700"
-                >
-                    Your details
-                </h2>
+                <h2 class="text-sm font-semibold text-gray-700">Your details</h2>
 
                 <div>
-                    <label
-                        class="block text-sm font-medium
-                            text-gray-700 mb-1"
-                    >
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
                         Full Name
                         <span class="text-red-400 ml-0.5">*</span>
                     </label>
@@ -465,18 +371,13 @@ const accentStyle = computed(() => ({
                         v-model="submitterName"
                         type="text"
                         placeholder="Jane Smith"
-                        class="w-full rounded-xl border border-gray-200
-                            px-3.5 py-2.5 text-sm focus:outline-none
-                            focus:ring-2 focus:border-transparent"
+                        class="w-full rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
                         style="--tw-ring-color: var(--accent)"
                     />
                 </div>
 
                 <div>
-                    <label
-                        class="block text-sm font-medium
-                            text-gray-700 mb-1"
-                    >
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
                         Email
                         <span class="text-red-400 ml-0.5">*</span>
                     </label>
@@ -484,33 +385,22 @@ const accentStyle = computed(() => ({
                         v-model="submitterEmail"
                         type="email"
                         placeholder="jane@example.com"
-                        class="w-full rounded-xl border border-gray-200
-                            px-3.5 py-2.5 text-sm focus:outline-none
-                            focus:ring-2 focus:border-transparent"
+                        class="w-full rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
                         style="--tw-ring-color: var(--accent)"
                     />
                 </div>
 
-                <p
-                    v-if="submitError"
-                    class="text-sm text-red-500"
-                >
+                <p v-if="submitError" class="text-sm text-red-500">
                     {{ submitError }}
                 </p>
 
                 <button
                     :disabled="isSubmitting"
-                    class="w-full py-3 rounded-xl text-white
-                        font-semibold text-sm transition-opacity
-                        disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="w-full py-3 rounded-xl text-white font-semibold text-sm transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                     style="background: var(--accent)"
                     @click="handleSubmit"
                 >
-                    {{
-                        isSubmitting
-                            ? 'Submitting…'
-                            : form.submitButtonText
-                    }}
+                    {{ isSubmitting ? 'Submitting…' : form.submitButtonText }}
                 </button>
             </div>
         </div>
