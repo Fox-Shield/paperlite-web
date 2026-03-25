@@ -100,6 +100,30 @@ const routes: RouteRecordRaw[] = [
         name: 'PublicIntakeForm',
         component: () => import('@/views/intake/PublicIntakeFormView.vue')
     },
+    {
+        path: '/clause-library',
+        name: 'clause-library',
+        component: () => import('@/views/clauses/ClauseLibraryView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/clause-library/new',
+        name: 'clause-new',
+        component: () => import('@/views/clauses/ClauseEditorView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/clause-library/:id/edit',
+        name: 'clause-edit',
+        component: () => import('@/views/clauses/ClauseEditorView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/clause-library/:id',
+        name: 'clause-detail',
+        component: () => import('@/views/clauses/ClauseDetailView.vue'),
+        meta: { requiresAuth: true }
+    },
     { path: '/:pathMatch(.*)*', redirect: '/dashboard' }
 ]
 
