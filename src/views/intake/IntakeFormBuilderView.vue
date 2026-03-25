@@ -206,17 +206,11 @@ async function handleSave(): Promise<void> {
 <template>
     <div class="min-h-screen bg-gray-50 flex flex-col">
         <!-- Header -->
-        <header
-            class="bg-white border-b border-gray-200 shrink-0"
-        >
-            <div
-                class="max-w-6xl mx-auto px-6 h-14
-                    flex items-center gap-3"
-            >
+        <header class="bg-white border-b border-gray-200 shrink-0">
+            <div class="max-w-6xl mx-auto px-6 h-14 flex items-center gap-3">
                 <router-link
                     to="/intake-forms"
-                    class="text-sm text-gray-400 hover:text-gray-900
-                        transition-colors flex items-center gap-1"
+                    class="text-sm text-gray-400 hover:text-gray-900 transition-colors flex items-center gap-1"
                 >
                     <svg
                         class="w-4 h-4"
@@ -235,45 +229,29 @@ async function handleSave(): Promise<void> {
                 </router-link>
                 <span class="text-gray-300">/</span>
                 <span class="text-sm font-semibold text-gray-900">
-                    {{
-                        isEditMode
-                            ? 'Edit Form'
-                            : 'New Intake Form'
-                    }}
+                    {{ isEditMode ? 'Edit Form' : 'New Intake Form' }}
                 </span>
             </div>
         </header>
 
         <!-- Two-panel layout -->
-        <div
-            class="flex-1 max-w-6xl mx-auto w-full px-6
-                py-6 flex gap-6"
-        >
+        <div class="flex-1 max-w-6xl mx-auto w-full px-6 py-6 flex gap-6">
             <!-- Left panel — form settings -->
             <div class="w-80 shrink-0 space-y-4">
                 <!-- Template selector (create only) -->
                 <div
                     v-if="!isEditMode"
-                    class="bg-white rounded-xl border
-                        border-gray-100 shadow-sm p-4"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4"
                 >
-                    <label
-                        class="block text-xs font-medium
-                            text-gray-600 mb-1.5"
-                    >
+                    <label class="block text-xs font-medium text-gray-600 mb-1.5">
                         Template
                         <span class="text-red-400 ml-0.5">*</span>
                     </label>
                     <select
                         v-model="selectedTemplateId"
-                        class="w-full rounded-lg border border-gray-200
-                            px-3 py-2 text-sm focus:outline-none
-                            focus:ring-2 focus:ring-gray-900
-                            focus:border-transparent"
+                        class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                     >
-                        <option :value="null" disabled>
-                            Select a template…
-                        </option>
+                        <option :value="null" disabled>Select a template…</option>
                         <option
                             v-for="tpl in templates"
                             :key="tpl.id"
@@ -286,21 +264,16 @@ async function handleSave(): Promise<void> {
 
                 <!-- Settings card -->
                 <div
-                    class="bg-white rounded-xl border
-                        border-gray-100 shadow-sm p-4 space-y-4"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 space-y-4"
                 >
                     <h2
-                        class="text-xs font-semibold text-gray-500
-                            uppercase tracking-wide"
+                        class="text-xs font-semibold text-gray-500 uppercase tracking-wide"
                     >
                         Form Settings
                     </h2>
 
                     <div>
-                        <label
-                            class="block text-xs font-medium
-                                text-gray-600 mb-1"
-                        >
+                        <label class="block text-xs font-medium text-gray-600 mb-1">
                             Title
                             <span class="text-red-400 ml-0.5">*</span>
                         </label>
@@ -308,121 +281,82 @@ async function handleSave(): Promise<void> {
                             v-model="title"
                             type="text"
                             placeholder="Client Intake Form"
-                            class="w-full rounded-lg border border-gray-200
-                                px-3 py-2 text-sm focus:outline-none
-                                focus:ring-2 focus:ring-gray-900
-                                focus:border-transparent"
+                            class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                         />
                     </div>
 
                     <div>
-                        <label
-                            class="block text-xs font-medium
-                                text-gray-600 mb-1"
-                        >
+                        <label class="block text-xs font-medium text-gray-600 mb-1">
                             Description
                         </label>
                         <textarea
                             v-model="description"
                             rows="2"
                             placeholder="Brief description shown to clients"
-                            class="w-full rounded-lg border border-gray-200
-                                px-3 py-2 text-sm focus:outline-none
-                                focus:ring-2 focus:ring-gray-900
-                                focus:border-transparent resize-none"
+                            class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent resize-none"
                         />
                     </div>
 
                     <div>
-                        <label
-                            class="block text-xs font-medium
-                                text-gray-600 mb-1"
-                        >
+                        <label class="block text-xs font-medium text-gray-600 mb-1">
                             Welcome Message
                         </label>
                         <textarea
                             v-model="welcomeMessage"
                             rows="2"
                             placeholder="Shown at the top of the public form"
-                            class="w-full rounded-lg border border-gray-200
-                                px-3 py-2 text-sm focus:outline-none
-                                focus:ring-2 focus:ring-gray-900
-                                focus:border-transparent resize-none"
+                            class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent resize-none"
                         />
                     </div>
 
                     <div>
-                        <label
-                            class="block text-xs font-medium
-                                text-gray-600 mb-1"
-                        >
+                        <label class="block text-xs font-medium text-gray-600 mb-1">
                             Submit Button Text
                         </label>
                         <input
                             v-model="submitButtonText"
                             type="text"
-                            class="w-full rounded-lg border border-gray-200
-                                px-3 py-2 text-sm focus:outline-none
-                                focus:ring-2 focus:ring-gray-900
-                                focus:border-transparent"
+                            class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                         />
                     </div>
 
                     <div>
-                        <label
-                            class="block text-xs font-medium
-                                text-gray-600 mb-1"
-                        >
+                        <label class="block text-xs font-medium text-gray-600 mb-1">
                             Branding Color
                         </label>
                         <div class="flex items-center gap-2">
                             <input
                                 v-model="brandingColor"
                                 type="color"
-                                class="w-8 h-8 rounded border
-                                    border-gray-200 cursor-pointer
-                                    p-0.5"
+                                class="w-8 h-8 rounded border border-gray-200 cursor-pointer p-0.5"
                             />
                             <input
                                 v-model="brandingColor"
                                 type="text"
                                 maxlength="7"
                                 placeholder="#4f46e5"
-                                class="flex-1 rounded-lg border
-                                    border-gray-200 px-3 py-2 text-sm
-                                    font-mono focus:outline-none
-                                    focus:ring-2 focus:ring-gray-900
-                                    focus:border-transparent"
+                                class="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label
-                            class="block text-xs font-medium
-                                text-gray-600 mb-1"
-                        >
+                        <label class="block text-xs font-medium text-gray-600 mb-1">
                             Logo URL
                         </label>
                         <input
                             v-model="logoUrl"
                             type="url"
                             placeholder="https://…"
-                            class="w-full rounded-lg border border-gray-200
-                                px-3 py-2 text-sm focus:outline-none
-                                focus:ring-2 focus:ring-gray-900
-                                focus:border-transparent"
+                            class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                         />
                     </div>
 
-                    <label
-                        class="flex items-center gap-2.5 cursor-pointer"
-                    >
+                    <label class="flex items-center gap-2.5 cursor-pointer">
                         <input
                             v-model="allowSaveResume"
                             type="checkbox"
-                            class="w-4 h-4 rounded border-gray-300
-                                text-gray-900 focus:ring-gray-900"
+                            class="w-4 h-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900"
                         />
                         <span class="text-sm text-gray-700">
                             Allow save &amp; resume
@@ -433,21 +367,16 @@ async function handleSave(): Promise<void> {
 
             <!-- Right panel — field configurator -->
             <div class="flex-1 min-w-0">
-                <div
-                    class="bg-white rounded-xl border border-gray-100
-                        shadow-sm p-4"
-                >
+                <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
                     <h2
-                        class="text-xs font-semibold text-gray-500
-                            uppercase tracking-wide mb-4"
+                        class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4"
                     >
                         Fields
                     </h2>
 
                     <div
                         v-if="fieldRows.length === 0"
-                        class="flex flex-col items-center justify-center
-                            py-16 text-center text-gray-400"
+                        class="flex flex-col items-center justify-center py-16 text-center text-gray-400"
                     >
                         <p class="text-sm">
                             {{
@@ -462,20 +391,16 @@ async function handleSave(): Promise<void> {
                         <div
                             v-for="(field, idx) in fieldRows"
                             :key="field._tempId"
-                            class="border border-gray-100 rounded-lg p-3
-                                bg-gray-50 cursor-grab active:cursor-grabbing"
+                            class="border border-gray-100 rounded-lg p-3 bg-gray-50 cursor-grab active:cursor-grabbing"
                             draggable="true"
                             @dragstart="onDragStart(idx)"
                             @dragover.prevent
                             @drop.prevent="onDrop(idx)"
                         >
                             <!-- Field header -->
-                            <div
-                                class="flex items-center gap-2 mb-3"
-                            >
+                            <div class="flex items-center gap-2 mb-3">
                                 <svg
-                                    class="w-4 h-4 text-gray-300
-                                        shrink-0"
+                                    class="w-4 h-4 text-gray-300 shrink-0"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -487,16 +412,11 @@ async function handleSave(): Promise<void> {
                                         d="M4 8h16M4 16h16"
                                     />
                                 </svg>
-                                <span
-                                    class="text-xs font-semibold
-                                        text-gray-700 flex-1"
-                                >
+                                <span class="text-xs font-semibold text-gray-700 flex-1">
                                     {{ field.label }}
                                 </span>
                                 <span
-                                    class="text-xs px-1.5 py-0.5 rounded
-                                        bg-gray-200 text-gray-500 font-mono
-                                        uppercase"
+                                    class="text-xs px-1.5 py-0.5 rounded bg-gray-200 text-gray-500 font-mono uppercase"
                                 >
                                     {{ field.fieldType }}
                                 </span>
@@ -505,77 +425,47 @@ async function handleSave(): Promise<void> {
                             <div class="grid grid-cols-2 gap-3">
                                 <!-- Label override -->
                                 <div class="col-span-2">
-                                    <label
-                                        class="block text-xs text-gray-500
-                                            mb-0.5"
-                                    >
+                                    <label class="block text-xs text-gray-500 mb-0.5">
                                         Label
                                     </label>
                                     <input
                                         v-model="field.label"
                                         type="text"
-                                        class="w-full rounded-md border
-                                            border-gray-200 px-2.5 py-1.5
-                                            text-sm focus:outline-none
-                                            focus:ring-1
-                                            focus:ring-gray-900"
+                                        class="w-full rounded-md border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-gray-900"
                                     />
                                 </div>
 
                                 <!-- Help text -->
                                 <div class="col-span-2">
-                                    <label
-                                        class="block text-xs text-gray-500
-                                            mb-0.5"
-                                    >
+                                    <label class="block text-xs text-gray-500 mb-0.5">
                                         Help text
                                     </label>
                                     <input
                                         v-model="field.helpText"
                                         type="text"
                                         placeholder="Optional hint for clients"
-                                        class="w-full rounded-md border
-                                            border-gray-200 px-2.5 py-1.5
-                                            text-sm focus:outline-none
-                                            focus:ring-1
-                                            focus:ring-gray-900"
+                                        class="w-full rounded-md border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-gray-900"
                                     />
                                 </div>
 
                                 <!-- Required toggle -->
-                                <label
-                                    class="flex items-center gap-2
-                                        cursor-pointer"
-                                >
+                                <label class="flex items-center gap-2 cursor-pointer">
                                     <input
                                         v-model="field.isRequired"
                                         type="checkbox"
-                                        class="w-4 h-4 rounded
-                                            border-gray-300 text-gray-900
-                                            focus:ring-gray-900"
+                                        class="w-4 h-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900"
                                     />
-                                    <span
-                                        class="text-xs text-gray-600"
-                                    >
-                                        Required
-                                    </span>
+                                    <span class="text-xs text-gray-600"> Required </span>
                                 </label>
 
                                 <!-- Conditional toggle -->
-                                <label
-                                    class="flex items-center gap-2
-                                        cursor-pointer"
-                                >
+                                <label class="flex items-center gap-2 cursor-pointer">
                                     <input
                                         v-model="field.isConditional"
                                         type="checkbox"
-                                        class="w-4 h-4 rounded
-                                            border-gray-300 text-gray-900
-                                            focus:ring-gray-900"
+                                        class="w-4 h-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900"
                                     />
-                                    <span
-                                        class="text-xs text-gray-600"
-                                    >
+                                    <span class="text-xs text-gray-600">
                                         Conditional
                                     </span>
                                 </label>
@@ -583,60 +473,36 @@ async function handleSave(): Promise<void> {
                                 <!-- Conditional config -->
                                 <template v-if="field.isConditional">
                                     <div>
-                                        <label
-                                            class="block text-xs
-                                                text-gray-500 mb-0.5"
-                                        >
+                                        <label class="block text-xs text-gray-500 mb-0.5">
                                             Show when field
                                         </label>
                                         <select
-                                            v-model="
-                                                field.conditionalFieldId
-                                            "
-                                            class="w-full rounded-md
-                                                border border-gray-200
-                                                px-2.5 py-1.5 text-sm
-                                                focus:outline-none
-                                                focus:ring-1
-                                                focus:ring-gray-900"
+                                            v-model="field.conditionalFieldId"
+                                            class="w-full rounded-md border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-gray-900"
                                         >
                                             <option :value="undefined">
                                                 — pick field —
                                             </option>
                                             <option
                                                 v-for="other in fieldRows.filter(
-                                                    (r) =>
-                                                        r._tempId !==
-                                                        field._tempId
+                                                    (r) => r._tempId !== field._tempId
                                                 )"
                                                 :key="other._tempId"
-                                                :value="
-                                                    other.templateFieldId
-                                                "
+                                                :value="other.templateFieldId"
                                             >
                                                 {{ other.label }}
                                             </option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label
-                                            class="block text-xs
-                                                text-gray-500 mb-0.5"
-                                        >
+                                        <label class="block text-xs text-gray-500 mb-0.5">
                                             equals value
                                         </label>
                                         <input
-                                            v-model="
-                                                field.conditionalValue
-                                            "
+                                            v-model="field.conditionalValue"
                                             type="text"
                                             placeholder="e.g. Yes"
-                                            class="w-full rounded-md
-                                                border border-gray-200
-                                                px-2.5 py-1.5 text-sm
-                                                focus:outline-none
-                                                focus:ring-1
-                                                focus:ring-gray-900"
+                                            class="w-full rounded-md border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-gray-900"
                                         />
                                     </div>
                                 </template>
@@ -648,36 +514,21 @@ async function handleSave(): Promise<void> {
         </div>
 
         <!-- Bottom action bar -->
-        <footer
-            class="bg-white border-t border-gray-200 shrink-0"
-        >
-            <div
-                class="max-w-6xl mx-auto px-6 h-14
-                    flex items-center justify-between"
-            >
-                <p
-                    v-if="saveError"
-                    class="text-sm text-red-500"
-                >
+        <footer class="bg-white border-t border-gray-200 shrink-0">
+            <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+                <p v-if="saveError" class="text-sm text-red-500">
                     {{ saveError }}
                 </p>
                 <div class="ml-auto flex items-center gap-3">
                     <router-link
                         to="/intake-forms"
-                        class="px-4 py-1.5 rounded-lg border
-                            border-gray-200 text-sm font-medium
-                            text-gray-700 hover:border-gray-400
-                            transition-colors"
+                        class="px-4 py-1.5 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-gray-400 transition-colors"
                     >
                         Cancel
                     </router-link>
                     <button
                         :disabled="isSaving"
-                        class="px-4 py-1.5 rounded-lg bg-gray-900
-                            text-white text-sm font-medium
-                            hover:bg-gray-700 transition-colors
-                            disabled:opacity-50
-                            disabled:cursor-not-allowed"
+                        class="px-4 py-1.5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         @click="handleSave"
                     >
                         {{

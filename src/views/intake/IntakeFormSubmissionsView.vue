@@ -46,13 +46,9 @@ function fieldLabel(fieldId: number): string {
     <div class="min-h-screen bg-gray-50">
         <!-- Header -->
         <header class="bg-white border-b border-gray-200">
-            <div
-                class="max-w-4xl mx-auto px-6 h-14
-                    flex items-center gap-3"
-            >
+            <div class="max-w-4xl mx-auto px-6 h-14 flex items-center gap-3">
                 <button
-                    class="text-sm text-gray-400 hover:text-gray-900
-                        transition-colors flex items-center gap-1"
+                    class="text-sm text-gray-400 hover:text-gray-900 transition-colors flex items-center gap-1"
                     @click="router.push('/intake-forms')"
                 >
                     <svg
@@ -72,9 +68,7 @@ function fieldLabel(fieldId: number): string {
                 </button>
                 <span class="text-gray-300">/</span>
                 <span class="text-sm font-semibold text-gray-900">
-                    {{
-                        store.currentForm?.title ?? 'Submissions'
-                    }}
+                    {{ store.currentForm?.title ?? 'Submissions' }}
                 </span>
             </div>
         </header>
@@ -85,22 +79,16 @@ function fieldLabel(fieldId: number): string {
                 <div
                     v-for="i in 4"
                     :key="i"
-                    class="h-14 bg-white rounded-xl border
-                        border-gray-100 animate-pulse"
+                    class="h-14 bg-white rounded-xl border border-gray-100 animate-pulse"
                 />
             </div>
 
             <!-- Empty -->
             <div
                 v-else-if="store.submissions.length === 0"
-                class="flex flex-col items-center justify-center
-                    py-24 text-center"
+                class="flex flex-col items-center justify-center py-24 text-center"
             >
-                <p
-                    class="text-sm font-medium text-gray-900 mb-1"
-                >
-                    No submissions yet
-                </p>
+                <p class="text-sm font-medium text-gray-900 mb-1">No submissions yet</p>
                 <p class="text-xs text-gray-500">
                     Share the form link to start collecting responses.
                 </p>
@@ -109,33 +97,28 @@ function fieldLabel(fieldId: number): string {
             <!-- Table -->
             <div
                 v-else
-                class="bg-white rounded-xl border border-gray-100
-                    shadow-sm overflow-hidden"
+                class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden"
             >
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="border-b border-gray-100">
                             <th
-                                class="text-left px-4 py-3 text-xs
-                                    font-medium text-gray-500"
+                                class="text-left px-4 py-3 text-xs font-medium text-gray-500"
                             >
                                 Name
                             </th>
                             <th
-                                class="text-left px-4 py-3 text-xs
-                                    font-medium text-gray-500"
+                                class="text-left px-4 py-3 text-xs font-medium text-gray-500"
                             >
                                 Email
                             </th>
                             <th
-                                class="text-left px-4 py-3 text-xs
-                                    font-medium text-gray-500"
+                                class="text-left px-4 py-3 text-xs font-medium text-gray-500"
                             >
                                 Status
                             </th>
                             <th
-                                class="text-left px-4 py-3 text-xs
-                                    font-medium text-gray-500"
+                                class="text-left px-4 py-3 text-xs font-medium text-gray-500"
                             >
                                 Submitted
                             </th>
@@ -143,41 +126,26 @@ function fieldLabel(fieldId: number): string {
                         </tr>
                     </thead>
                     <tbody>
-                        <template
-                            v-for="sub in store.submissions"
-                            :key="sub.id"
-                        >
+                        <template v-for="sub in store.submissions" :key="sub.id">
                             <tr
-                                class="border-b border-gray-50
-                                    hover:bg-gray-50 transition-colors
-                                    cursor-pointer"
+                                class="border-b border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer"
                                 @click="toggleExpand(sub.id)"
                             >
-                                <td
-                                    class="px-4 py-3 font-medium
-                                        text-gray-900"
-                                >
+                                <td class="px-4 py-3 font-medium text-gray-900">
                                     {{ sub.submitterName }}
                                 </td>
-                                <td
-                                    class="px-4 py-3 text-gray-500"
-                                >
+                                <td class="px-4 py-3 text-gray-500">
                                     {{ sub.submitterEmail }}
                                 </td>
                                 <td class="px-4 py-3">
                                     <span
-                                        class="inline-flex items-center
-                                            px-2 py-0.5 rounded-full
-                                            text-xs font-medium"
+                                        class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
                                         :class="statusColor(sub.status)"
                                     >
                                         {{ sub.status }}
                                     </span>
                                 </td>
-                                <td
-                                    class="px-4 py-3 text-gray-400
-                                        text-xs"
-                                >
+                                <td class="px-4 py-3 text-gray-400 text-xs">
                                     {{
                                         sub.submittedAt
                                             ? new Date(
@@ -186,15 +154,11 @@ function fieldLabel(fieldId: number): string {
                                             : '—'
                                     }}
                                 </td>
-                                <td
-                                    class="px-4 py-3 text-right
-                                        text-gray-400"
-                                >
+                                <td class="px-4 py-3 text-right text-gray-400">
                                     <svg
                                         class="w-4 h-4 inline transition-transform"
                                         :class="{
-                                            'rotate-90':
-                                                expanded === sub.id
+                                            'rotate-90': expanded === sub.id
                                         }"
                                         fill="none"
                                         viewBox="0 0 24 24"
@@ -213,30 +177,21 @@ function fieldLabel(fieldId: number): string {
                             <!-- Expanded values -->
                             <tr
                                 v-if="expanded === sub.id"
-                                class="bg-gray-50 border-b
-                                    border-gray-100"
+                                class="bg-gray-50 border-b border-gray-100"
                             >
                                 <td colspan="5" class="px-4 py-4">
                                     <div class="space-y-2">
                                         <div
                                             v-for="val in sub.values"
                                             :key="val.fieldId"
-                                            class="flex items-baseline
-                                                gap-3"
+                                            class="flex items-baseline gap-3"
                                         >
                                             <span
-                                                class="text-xs font-medium
-                                                    text-gray-500 w-40
-                                                    shrink-0"
+                                                class="text-xs font-medium text-gray-500 w-40 shrink-0"
                                             >
-                                                {{
-                                                    fieldLabel(val.fieldId)
-                                                }}
+                                                {{ fieldLabel(val.fieldId) }}
                                             </span>
-                                            <span
-                                                class="text-sm
-                                                    text-gray-800"
-                                            >
+                                            <span class="text-sm text-gray-800">
                                                 {{ val.value || '—' }}
                                             </span>
                                         </div>

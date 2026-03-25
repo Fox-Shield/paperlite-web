@@ -29,7 +29,12 @@ function handleLogout(): void {
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
             >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -49,7 +54,12 @@ function handleLogout(): void {
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
             >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -64,12 +74,18 @@ function handleLogout(): void {
                 to="/templates"
                 class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 :class="
-                    $route.path.startsWith('/templates') && $route.path !== '/templates/my'
+                    $route.path.startsWith('/templates') &&
+                    $route.path !== '/templates/my'
                         ? 'bg-gray-100 text-gray-900'
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
             >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -89,7 +105,12 @@ function handleLogout(): void {
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
             >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -109,7 +130,12 @@ function handleLogout(): void {
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
             >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -118,6 +144,31 @@ function handleLogout(): void {
                     />
                 </svg>
                 Intake Forms
+            </router-link>
+
+            <router-link
+                to="/clause-library"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                :class="
+                    $route.path.startsWith('/clause-library')
+                        ? 'bg-gray-100 text-gray-900'
+                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                "
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.75"
+                        d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+                    />
+                </svg>
+                Clause Library
             </router-link>
         </nav>
 
