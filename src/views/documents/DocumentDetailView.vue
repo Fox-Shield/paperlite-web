@@ -223,10 +223,10 @@ onUnmounted(() => {
         <!-- Two-panel layout -->
         <div
             v-if="!isLoading"
-            class="flex-1 max-w-7xl mx-auto w-full px-4 py-6 flex gap-6 min-h-0"
+            class="flex-1 max-w-7xl mx-auto w-full px-4 py-6 flex flex-col md:flex-row gap-6 min-h-0"
         >
-            <!-- Left panel — field form (40%) -->
-            <div class="w-2/5 shrink-0">
+            <!-- Left panel — field form (full width on mobile, 40% on desktop) -->
+            <div class="w-full md:w-2/5 md:shrink-0">
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
                     <h2 class="text-sm font-semibold text-gray-700 mb-5">
                         Fill in fields
