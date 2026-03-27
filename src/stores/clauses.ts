@@ -3,19 +3,26 @@ import { ref } from 'vue'
 import { clausesApi } from '@/services/api'
 import type { Clause, ClauseSummary, ClauseVersion, CreateClauseRequest, UpdateClauseRequest } from '@/types/clause'
 
+const CACHE_TTL_MS = 5 * 60 * 1000 // 5 minutes
+
 export const useClausesStore = defineStore('clauses', () => {
     const clauses = ref<ClauseSummary[]>([])
     const currentClause = ref<Clause | null>(null)
     const versions = ref<ClauseVersion[]>([])
     const loading = ref(false)
     const error = ref<string | null>(null)
+    const lastFetched = ref<number | null>(null)
 
-    async function fetchClauses(workspaceId?: string): Promise<ClauseSummary[]> {
+    async function fetchClauses(workspaceId?: string, force = false): Promise<ClauseSummary[]> {
+        if (!force && lastFetched.value !== null && Date.now() - lastFetched.value < CACHE_TTL_MS) {
+            return clauses.value
+        }
         loading.value = true
         error.value = null
         try {
             const { data } = await clausesApi.list(workspaceId)
             clauses.value = data
+            lastFetched.value = Date.now()
             return data
         } catch {
             error.value = 'Failed to load clauses.'
@@ -85,6 +92,7 @@ export const useClausesStore = defineStore('clauses', () => {
         versions,
         loading,
         error,
+        lastFetched,
         fetchClauses,
         fetchClause,
         createClause,

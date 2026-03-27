@@ -14,7 +14,15 @@ export default defineConfig({
         // lightningcss (default in Vite 8 + rolldown) misparses @keyframes
         // blocks emitted by @tailwindcss/vite. Disable CSS minification
         // until the upstream bug is resolved.
-        cssMinify: false
+        cssMinify: false,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'vendor-vue': ['vue', 'vue-router', 'pinia'],
+                    'vendor-axios': ['axios']
+                }
+            }
+        }
     },
     server: {
         port: 5173,
