@@ -47,15 +47,35 @@ api.interceptors.request.use((config) => {
     return config
 })
 
-// Handle 401 — clear auth and redirect
+// Global response error handler
 api.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-        if (error.response?.status === 401) {
+        const status = error.response?.status
+
+        if (status === 401) {
             localStorage.removeItem('access_token')
             localStorage.removeItem('refresh_token')
+            localStorage.removeItem('user')
             window.location.href = '/login'
+            return Promise.reject(error)
         }
+
+        // Lazy-import toast store to avoid circular dependency at module init
+        import('@/stores/toast').then(({ useToastStore }) => {
+            const toast = useToastStore()
+            if (status === 402) {
+                toast.error("You've reached your plan limit. Upgrade to continue.", {
+                    label: 'Upgrade',
+                    href: '/settings/billing'
+                })
+            } else if (status === 429) {
+                toast.warning('Too many requests. Please slow down.')
+            } else if (status !== undefined && status >= 500) {
+                toast.error('Something went wrong. Please try again.')
+            }
+        })
+
         return Promise.reject(error)
     }
 )
