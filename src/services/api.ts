@@ -17,6 +17,14 @@ import type {
     UpdateClauseRequest,
     InsertClauseRequest
 } from '@/types/clause'
+import type {
+    DocumentShare,
+    DocumentWithShare,
+    ShareDocumentRequest,
+    SharePermission,
+    Comment,
+    CreateCommentRequest
+} from '@/types/collaboration'
 
 const api = axios.create({
     baseURL: '/api',
@@ -87,6 +95,30 @@ export const clausesApi = {
     removeFromTemplate: (templateId: string, clauseId: string) =>
         api.delete(`/templates/${templateId}/clauses/${clauseId}`),
     getTemplateClauses: (templateId: string) => api.get<TemplateClause[]>(`/templates/${templateId}/clauses`)
+}
+
+// ── Shares (authenticated) ────────────────────────────────────────────────────
+
+export const sharesApi = {
+    getShares: (documentId: string) => api.get<DocumentShare[]>(`/documents/${documentId}/shares`),
+    shareDocument: (documentId: string, data: ShareDocumentRequest) =>
+        api.post<DocumentShare>(`/documents/${documentId}/shares`, data),
+    updatePermission: (documentId: string, shareId: string, permission: SharePermission) =>
+        api.put<DocumentShare>(`/documents/${documentId}/shares/${shareId}`, { permission }),
+    revokeShare: (documentId: string, shareId: string) => api.delete(`/documents/${documentId}/shares/${shareId}`),
+    getSharedWithMe: () => api.get<DocumentWithShare[]>('/documents/shared-with-me')
+}
+
+// ── Comments (authenticated) ──────────────────────────────────────────────────
+
+export const commentsApi = {
+    getComments: (documentId: string) => api.get<Comment[]>(`/documents/${documentId}/comments`),
+    addComment: (documentId: string, data: CreateCommentRequest) =>
+        api.post<Comment>(`/documents/${documentId}/comments`, data),
+    updateComment: (documentId: string, commentId: string, data: CreateCommentRequest) =>
+        api.put<Comment>(`/documents/${documentId}/comments/${commentId}`, data),
+    deleteComment: (documentId: string, commentId: string) =>
+        api.delete(`/documents/${documentId}/comments/${commentId}`)
 }
 
 export default api

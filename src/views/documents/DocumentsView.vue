@@ -1,7 +1,10 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useDocumentsStore } from '@/stores/documents'
+import { useRouter } from 'vue-router'
 import AppSidebar from '@/components/AppSidebar.vue'
+
+const router = useRouter()
 
 const documentStore = useDocumentsStore()
 
@@ -33,6 +36,12 @@ onMounted(() => documentStore.fetchDocuments())
                 <div>
                     <h1 class="page-title">My Documents</h1>
                     <p class="page-subtitle">Your uploaded and generated documents</p>
+                    <button
+                        class="shared-link"
+                        @click="router.push({ name: 'shared-with-me' })"
+                    >
+                        Shared with me →
+                    </button>
                 </div>
                 <div class="upload-wrapper" title="Coming in M3 — PDF upload">
                     <button class="btn-upload" disabled>
@@ -201,6 +210,22 @@ onMounted(() => documentStore.fetchDocuments())
         .page-subtitle {
             font-size: 14px;
             color: #6b7280;
+        }
+
+        .shared-link {
+            margin-top: 6px;
+            display: inline-block;
+            font-size: 13px;
+            color: #6b7280;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+
+            &:hover {
+                color: #111827;
+                text-decoration: underline;
+            }
         }
 
         .upload-wrapper {

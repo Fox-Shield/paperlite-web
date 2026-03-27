@@ -49,7 +49,8 @@ function handleLogout(): void {
                 to="/documents"
                 class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 :class="
-                    $route.path.startsWith('/documents')
+                    $route.path.startsWith('/documents') &&
+                    $route.path !== '/documents/shared-with-me'
                         ? 'bg-gray-100 text-gray-900'
                         : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 "
@@ -144,6 +145,31 @@ function handleLogout(): void {
                     />
                 </svg>
                 Intake Forms
+            </router-link>
+
+            <router-link
+                to="/documents/shared-with-me"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                :class="
+                    $route.path === '/documents/shared-with-me'
+                        ? 'bg-gray-100 text-gray-900'
+                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                "
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.75"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                </svg>
+                Shared with Me
             </router-link>
 
             <router-link

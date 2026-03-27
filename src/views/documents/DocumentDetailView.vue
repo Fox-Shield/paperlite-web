@@ -3,6 +3,8 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useGenerationStore } from '@/stores/generation'
 import GenerationStatusBanner from '@/components/GenerationStatusBanner.vue'
+import ShareModal from '@/components/ShareModal.vue'
+import CommentsPanel from '@/components/CommentsPanel.vue'
 import api from '@/services/api'
 import type { Document, FieldValue } from '@/types/generation'
 
@@ -11,6 +13,10 @@ const router = useRouter()
 const generationStore = useGenerationStore()
 
 const documentId = computed(() => Number(route.params.id))
+const documentIdStr = computed(() => String(route.params.id))
+
+const showShareModal = ref(false)
+const showComments = ref(false)
 
 const document = ref<Document | null>(null)
 const isLoading = ref(false)
@@ -154,12 +160,54 @@ onUnmounted(() => {
                 <span class="text-sm font-semibold text-gray-900">
                     {{ document?.name ?? 'Loading…' }}
                 </span>
-                <span
-                    v-if="showAutoSave"
-                    class="ml-auto text-xs text-gray-400 animate-pulse"
-                >
-                    Auto-saving…
-                </span>
+                <div class="ml-auto flex items-center gap-2">
+                    <span v-if="showAutoSave" class="text-xs text-gray-400 animate-pulse">
+                        Auto-saving…
+                    </span>
+                    <button
+                        @click="showShareModal = true"
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-gray-400 transition-colors"
+                    >
+                        <svg
+                            class="w-3.5 h-3.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                            />
+                        </svg>
+                        Share
+                    </button>
+                    <button
+                        @click="showComments = !showComments"
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-medium transition-colors"
+                        :class="
+                            showComments
+                                ? 'border-gray-900 bg-gray-900 text-white'
+                                : 'border-gray-200 text-gray-700 hover:border-gray-400'
+                        "
+                    >
+                        <svg
+                            class="w-3.5 h-3.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                            />
+                        </svg>
+                        Comments
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -175,7 +223,7 @@ onUnmounted(() => {
         <!-- Two-panel layout -->
         <div
             v-if="!isLoading"
-            class="flex-1 max-w-7xl mx-auto w-full px-4 py-6 flex gap-6"
+            class="flex-1 max-w-7xl mx-auto w-full px-4 py-6 flex gap-6 min-h-0"
         >
             <!-- Left panel — field form (40%) -->
             <div class="w-2/5 shrink-0">
@@ -310,7 +358,7 @@ onUnmounted(() => {
                 </div>
             </div>
 
-            <!-- Right panel — live preview (60%) -->
+            <!-- Right panel — live preview (flex-1 when comments closed) -->
             <div class="flex-1">
                 <div
                     class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 h-full"
@@ -385,7 +433,17 @@ onUnmounted(() => {
                     </div>
                 </div>
             </div>
+
+            <!-- Comments panel -->
+            <CommentsPanel v-if="showComments" :document-id="documentIdStr" />
         </div>
+
+        <!-- ShareModal -->
+        <ShareModal
+            v-if="showShareModal"
+            :document-id="documentIdStr"
+            @close="showShareModal = false"
+        />
 
         <!-- Loading skeleton -->
         <div v-else class="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
