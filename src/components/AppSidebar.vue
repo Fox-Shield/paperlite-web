@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useSubscriptionStore } from '@/stores/subscription'
@@ -8,6 +8,7 @@ import PlanBadge from '@/components/PlanBadge.vue'
 const router = useRouter()
 const authStore = useAuthStore()
 const subscriptionStore = useSubscriptionStore()
+const mobileOpen = ref(false)
 
 const planTier = computed(() => subscriptionStore.mySubscription?.plan.tier ?? 'FREE')
 
@@ -19,20 +20,68 @@ function handleLogout(): void {
     authStore.logout()
     router.push('/login')
 }
+
+function closeMobile(): void {
+    mobileOpen.value = false
+}
 </script>
 
 <template>
-    <aside class="w-56 shrink-0 bg-white border-r border-gray-100 flex flex-col h-full">
+    <!-- Mobile hamburger button -->
+    <button
+        class="md:hidden fixed top-3 left-3 z-40 p-2 rounded-lg bg-white border border-gray-200 shadow-sm text-gray-600 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:outline-none"
+        @click="mobileOpen = !mobileOpen"
+        :aria-expanded="mobileOpen"
+        aria-controls="app-sidebar"
+        aria-label="Toggle navigation"
+    >
+        <svg
+            class="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+        >
+            <path
+                v-if="!mobileOpen"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path
+                v-else
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+            />
+        </svg>
+    </button>
+
+    <!-- Mobile backdrop -->
+    <div
+        v-if="mobileOpen"
+        class="md:hidden fixed inset-0 z-30 bg-black/30"
+        @click="closeMobile"
+        aria-hidden="true"
+    />
+
+    <aside
+        id="app-sidebar"
+        class="w-56 shrink-0 bg-white border-r border-gray-100 flex flex-col h-full fixed md:relative z-40 md:z-auto inset-y-0 left-0 transition-transform md:translate-x-0"
+        :class="mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+        aria-label="Main navigation"
+    >
         <!-- Logo -->
         <div class="h-14 flex items-center px-5 border-b border-gray-100">
             <span class="text-base font-semibold text-gray-900">PaperLite</span>
         </div>
 
         <!-- Nav -->
-        <nav class="flex-1 px-3 py-4 space-y-0.5">
+        <nav class="flex-1 px-3 py-4 space-y-0.5" aria-label="Site navigation">
             <router-link
                 to="/dashboard"
-                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
                 :class="
                     $route.path === '/dashboard'
                         ? 'bg-gray-100 text-gray-900'
@@ -44,6 +93,7 @@ function handleLogout(): void {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"
@@ -57,7 +107,7 @@ function handleLogout(): void {
 
             <router-link
                 to="/documents"
-                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
                 :class="
                     $route.path.startsWith('/documents') &&
                     $route.path !== '/documents/shared-with-me'
@@ -70,6 +120,7 @@ function handleLogout(): void {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"
@@ -83,7 +134,7 @@ function handleLogout(): void {
 
             <router-link
                 to="/templates"
-                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
                 :class="
                     $route.path.startsWith('/templates') &&
                     $route.path !== '/templates/my'
@@ -96,6 +147,7 @@ function handleLogout(): void {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"
@@ -109,7 +161,7 @@ function handleLogout(): void {
 
             <router-link
                 to="/templates/my"
-                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
                 :class="
                     $route.path === '/templates/my'
                         ? 'bg-gray-100 text-gray-900'
@@ -121,6 +173,7 @@ function handleLogout(): void {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"
@@ -134,7 +187,7 @@ function handleLogout(): void {
 
             <router-link
                 to="/intake-forms"
-                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
                 :class="
                     $route.path.startsWith('/intake-forms')
                         ? 'bg-gray-100 text-gray-900'
@@ -146,6 +199,7 @@ function handleLogout(): void {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"
@@ -159,7 +213,7 @@ function handleLogout(): void {
 
             <router-link
                 to="/documents/shared-with-me"
-                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
                 :class="
                     $route.path === '/documents/shared-with-me'
                         ? 'bg-gray-100 text-gray-900'
@@ -171,6 +225,7 @@ function handleLogout(): void {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"
@@ -184,7 +239,7 @@ function handleLogout(): void {
 
             <router-link
                 to="/clause-library"
-                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
                 :class="
                     $route.path.startsWith('/clause-library')
                         ? 'bg-gray-100 text-gray-900'
@@ -196,6 +251,7 @@ function handleLogout(): void {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"
@@ -209,7 +265,7 @@ function handleLogout(): void {
 
             <router-link
                 to="/settings/account"
-                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
                 :class="
                     $route.path.startsWith('/settings')
                         ? 'bg-gray-100 text-gray-900'
@@ -221,6 +277,7 @@ function handleLogout(): void {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"
@@ -250,7 +307,8 @@ function handleLogout(): void {
                 </div>
                 <button
                     @click="handleLogout"
-                    class="text-xs text-gray-400 hover:text-gray-900 transition-colors ml-2 shrink-0"
+                    class="text-xs text-gray-400 hover:text-gray-900 transition-colors ml-2 shrink-0 focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:outline-none rounded"
+                    aria-label="Sign out"
                 >
                     Sign out
                 </button>

@@ -43,7 +43,7 @@ const quickActions = [
     <div class="dashboard-layout">
         <AppSidebar />
 
-        <main class="dashboard-main">
+        <main id="main-content" class="dashboard-main">
             <header class="page-header">
                 <div>
                     <h1 class="page-title">Welcome back, {{ userName }} 👋</h1>
@@ -58,6 +58,7 @@ const quickActions = [
                         v-for="action in quickActions"
                         :key="action.path"
                         class="action-card"
+                        :aria-label="action.title"
                         @click="router.push(action.path)"
                     >
                         <div
