@@ -25,6 +25,15 @@ import type {
     Comment,
     CreateCommentRequest
 } from '@/types/collaboration'
+import type {
+    SubscriptionPlan,
+    UserSubscription,
+    UsageRecord,
+    Organization,
+    OrganizationMember,
+    OrgRole,
+    BillingCycle
+} from '@/types/subscription'
 
 const api = axios.create({
     baseURL: '/api',
@@ -119,6 +128,35 @@ export const commentsApi = {
         api.put<Comment>(`/documents/${documentId}/comments/${commentId}`, data),
     deleteComment: (documentId: string, commentId: string) =>
         api.delete(`/documents/${documentId}/comments/${commentId}`)
+}
+
+// ── Subscriptions (authenticated) ─────────────────────────────────────────────
+
+export const subscriptionApi = {
+    getPlans: () => api.get<SubscriptionPlan[]>('/subscriptions/plans'),
+    getMy: () => api.get<UserSubscription>('/subscriptions/my'),
+    createCheckout: (planId: number, billingCycle: BillingCycle) =>
+        api.post<{ checkoutUrl: string }>('/subscriptions/checkout', { planId, billingCycle }),
+    createPortal: () => api.post<{ portalUrl: string }>('/subscriptions/portal')
+}
+
+// ── Usage (authenticated) ──────────────────────────────────────────────────────
+
+export const usageApi = {
+    getUsage: () => api.get<UsageRecord>('/usage')
+}
+
+// ── Organizations (authenticated) ─────────────────────────────────────────────
+
+export const organizationApi = {
+    getAll: () => api.get<Organization[]>('/organizations'),
+    get: (id: number) => api.get<Organization>(`/organizations/${id}`),
+    create: (name: string) => api.post<Organization>('/organizations', { name }),
+    invite: (orgId: number, email: string, role: OrgRole) =>
+        api.post<OrganizationMember>(`/organizations/${orgId}/invite`, { email, role }),
+    removeMember: (orgId: number, userId: number) => api.delete(`/organizations/${orgId}/members/${userId}`),
+    updateMemberRole: (orgId: number, userId: number, role: OrgRole) =>
+        api.put<OrganizationMember>(`/organizations/${orgId}/members/${userId}/role`, { role })
 }
 
 export default api

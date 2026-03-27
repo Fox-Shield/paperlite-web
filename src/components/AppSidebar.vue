@@ -1,9 +1,19 @@
 <script setup lang="ts">
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useSubscriptionStore } from '@/stores/subscription'
+import PlanBadge from '@/components/PlanBadge.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const subscriptionStore = useSubscriptionStore()
+
+const planTier = computed(() => subscriptionStore.mySubscription?.plan.tier ?? 'FREE')
+
+onMounted(() => {
+    subscriptionStore.fetchMySubscription().catch(() => {})
+})
 
 function handleLogout(): void {
     authStore.logout()
@@ -196,14 +206,48 @@ function handleLogout(): void {
                 </svg>
                 Clause Library
             </router-link>
+
+            <router-link
+                to="/settings/account"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                :class="
+                    $route.path.startsWith('/settings')
+                        ? 'bg-gray-100 text-gray-900'
+                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                "
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.75"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    />
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.75"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                </svg>
+                Settings
+            </router-link>
         </nav>
 
         <!-- User / logout -->
         <div class="px-5 py-4 border-t border-gray-100">
             <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500 truncate">
-                    {{ authStore.user?.firstName }} {{ authStore.user?.lastName }}
-                </span>
+                <div class="min-w-0">
+                    <span class="text-xs text-gray-500 truncate block">
+                        {{ authStore.user?.firstName }} {{ authStore.user?.lastName }}
+                    </span>
+                    <PlanBadge :tier="planTier" class="mt-0.5" />
+                </div>
                 <button
                     @click="handleLogout"
                     class="text-xs text-gray-400 hover:text-gray-900 transition-colors ml-2 shrink-0"

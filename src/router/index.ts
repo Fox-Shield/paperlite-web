@@ -130,6 +130,38 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/clauses/ClauseDetailView.vue'),
         meta: { requiresAuth: true }
     },
+    {
+        path: '/settings',
+        component: () => import('@/views/settings/SettingsLayout.vue'),
+        meta: { requiresAuth: true },
+        redirect: '/settings/account',
+        children: [
+            {
+                path: 'account',
+                name: 'settings-account',
+                component: () => import('@/views/settings/AccountSettingsView.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: 'billing',
+                name: 'settings-billing',
+                component: () => import('@/views/settings/BillingSettingsView.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: 'organization',
+                name: 'settings-org',
+                component: () => import('@/views/settings/OrganizationSettingsView.vue'),
+                meta: { requiresAuth: true }
+            },
+            {
+                path: 'team',
+                name: 'settings-team',
+                component: () => import('@/views/settings/TeamSettingsView.vue'),
+                meta: { requiresAuth: true }
+            }
+        ]
+    },
     { path: '/:pathMatch(.*)*', redirect: '/dashboard' }
 ]
 
