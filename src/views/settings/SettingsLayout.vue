@@ -15,7 +15,10 @@ const tabs = [
     <div class="flex flex-col h-full">
         <div class="border-b border-gray-100 px-6 pt-6">
             <h1 class="text-lg font-semibold text-gray-900 mb-4">Settings</h1>
-            <nav class="flex gap-1 -mb-px">
+            <nav
+                class="flex gap-1 -mb-px overflow-x-auto scrollbar-none"
+                aria-label="Settings navigation"
+            >
                 <router-link
                     v-for="tab in tabs"
                     :key="tab.to"

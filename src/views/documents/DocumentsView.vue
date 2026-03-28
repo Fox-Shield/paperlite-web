@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted } from 'vue'
 import { useDocumentsStore } from '@/stores/documents'
 import { useRouter } from 'vue-router'
@@ -31,7 +31,7 @@ onMounted(() => documentStore.fetchDocuments())
     <div class="documents-layout">
         <AppSidebar />
 
-        <main class="documents-main">
+        <main id="main-content" class="documents-main">
             <header class="page-header">
                 <div>
                     <h1 class="page-title">My Documents</h1>

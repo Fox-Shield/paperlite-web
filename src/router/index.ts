@@ -24,6 +24,12 @@ const routes: RouteRecordRaw[] = [
         meta: { requiresGuest: true }
     },
     {
+        path: '/onboarding',
+        name: 'Onboarding',
+        component: () => import('@/views/OnboardingView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/dashboard',
         name: 'Dashboard',
         component: () => import('@/views/DashboardView.vue'),

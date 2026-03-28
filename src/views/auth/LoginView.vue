@@ -17,7 +17,10 @@ async function handleLogin() {
     loading.value = true
     try {
         await authStore.login(email.value, password.value)
-        router.push('/dashboard')
+        const dest = localStorage.getItem('onboarding_complete')
+            ? '/dashboard'
+            : '/onboarding'
+        router.push(dest)
     } catch (e) {
         const axiosError = e as AxiosError<{ message?: string }>
         error.value = axiosError.response?.data?.message ?? 'Invalid email or password.'

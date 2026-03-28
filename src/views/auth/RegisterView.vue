@@ -29,7 +29,8 @@ async function handleRegister() {
             email.value,
             password.value
         )
-        router.push('/dashboard')
+        // New registrations always go through onboarding
+        router.push('/onboarding')
     } catch (e) {
         const axiosError = e as AxiosError<{ message?: string }>
         error.value =
