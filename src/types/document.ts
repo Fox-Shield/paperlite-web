@@ -4,13 +4,20 @@ export enum DocumentStatus {
     Archived = 'ARCHIVED'
 }
 
+export interface DocumentVersionUserSummary {
+    id: number
+    name: string
+    email: string
+}
+
 export interface DocumentVersion {
-    id: string
-    documentId: string
+    id: number
+    documentId: number
     versionNumber: number
-    content: string
+    changeNote?: string
+    createdBy: DocumentVersionUserSummary
     createdAt: string
-    createdBy: string
+    fieldValues: Record<string, string>
 }
 
 export interface Document {
