@@ -2,21 +2,34 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useGenerationStore } from '@/stores/generation'
+import { useApprovalsStore } from '@/stores/approvals'
 import GenerationStatusBanner from '@/components/GenerationStatusBanner.vue'
 import ShareModal from '@/components/ShareModal.vue'
 import CommentsPanel from '@/components/CommentsPanel.vue'
+import VersionHistoryPanel from '@/components/VersionHistoryPanel.vue'
+import ApprovalBar from '@/components/ApprovalBar.vue'
+import RequestApprovalModal from '@/components/RequestApprovalModal.vue'
+import ApprovalRequestModal from '@/components/ApprovalRequestModal.vue'
 import api from '@/services/api'
 import type { Document, FieldValue } from '@/types/generation'
 
 const route = useRoute()
 const router = useRouter()
 const generationStore = useGenerationStore()
+const approvalsStore = useApprovalsStore()
 
 const documentId = computed(() => Number(route.params.id))
 const documentIdStr = computed(() => String(route.params.id))
 
 const showShareModal = ref(false)
 const showComments = ref(false)
+const showHistory = ref(false)
+const showRequestApprovalModal = ref(false)
+const showApprovalRequestModal = ref(false)
+
+const latestApprovalRequest = computed(
+    () => approvalsStore.requests[approvalsStore.requests.length - 1] ?? null
+)
 
 const document = ref<Document | null>(null)
 const isLoading = ref(false)
@@ -124,6 +137,7 @@ function goBack(): void {
 onMounted(async () => {
     generationStore.reset()
     await Promise.all([loadDocument(), loadFieldValues()])
+    approvalsStore.fetchForDocument(documentId.value).catch(() => {})
 })
 
 onUnmounted(() => {
@@ -164,6 +178,49 @@ onUnmounted(() => {
                     <span v-if="showAutoSave" class="text-xs text-gray-400 animate-pulse">
                         Auto-saving…
                     </span>
+                    <button
+                        @click="showRequestApprovalModal = true"
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-gray-400 transition-colors"
+                    >
+                        <svg
+                            class="w-3.5 h-3.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                        Request Approval
+                    </button>
+                    <button
+                        @click="showHistory = !showHistory"
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-medium transition-colors"
+                        :class="
+                            showHistory
+                                ? 'border-gray-900 bg-gray-900 text-white'
+                                : 'border-gray-200 text-gray-700 hover:border-gray-400'
+                        "
+                    >
+                        <svg
+                            class="w-3.5 h-3.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                        History
+                    </button>
                     <button
                         @click="showShareModal = true"
                         class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 hover:border-gray-400 transition-colors"
@@ -210,6 +267,15 @@ onUnmounted(() => {
                 </div>
             </div>
         </header>
+
+        <!-- Approval status bar -->
+        <ApprovalBar
+            v-if="document?.approvalStatus && document.approvalStatus !== 'NONE'"
+            :document-id="documentId"
+            :approval-status="document.approvalStatus"
+            @view-request="showApprovalRequestModal = true"
+            @status-changed="approvalsStore.fetchForDocument(documentId).catch(() => {})"
+        />
 
         <!-- Generation status banner -->
         <GenerationStatusBanner
@@ -436,6 +502,9 @@ onUnmounted(() => {
 
             <!-- Comments panel -->
             <CommentsPanel v-if="showComments" :document-id="documentIdStr" />
+
+            <!-- Version history panel -->
+            <VersionHistoryPanel v-if="showHistory" :document-id="documentId" />
         </div>
 
         <!-- ShareModal -->
@@ -443,6 +512,21 @@ onUnmounted(() => {
             v-if="showShareModal"
             :document-id="documentIdStr"
             @close="showShareModal = false"
+        />
+
+        <!-- Request Approval Modal -->
+        <RequestApprovalModal
+            v-if="showRequestApprovalModal"
+            :document-id="documentId"
+            @close="showRequestApprovalModal = false"
+            @submitted="approvalsStore.fetchForDocument(documentId).catch(() => {})"
+        />
+
+        <!-- Approval Request Detail Modal -->
+        <ApprovalRequestModal
+            v-if="showApprovalRequestModal && latestApprovalRequest"
+            :request="latestApprovalRequest"
+            @close="showApprovalRequestModal = false"
         />
 
         <!-- Loading skeleton -->

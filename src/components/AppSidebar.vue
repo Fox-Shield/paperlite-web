@@ -3,17 +3,21 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useSubscriptionStore } from '@/stores/subscription'
+import { useApprovalsStore } from '@/stores/approvals'
 import PlanBadge from '@/components/PlanBadge.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
 const subscriptionStore = useSubscriptionStore()
+const approvalsStore = useApprovalsStore()
 const mobileOpen = ref(false)
 
 const planTier = computed(() => subscriptionStore.mySubscription?.plan.tier ?? 'FREE')
+const pendingCount = computed(() => approvalsStore.pendingReviews.length)
 
 onMounted(() => {
     subscriptionStore.fetchMySubscription().catch(() => {})
+    approvalsStore.fetchPendingReviews().catch(() => {})
 })
 
 function handleLogout(): void {
@@ -130,6 +134,38 @@ function closeMobile(): void {
                     />
                 </svg>
                 Documents
+            </router-link>
+
+            <router-link
+                to="/approvals/pending"
+                class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
+                :class="
+                    $route.path === '/approvals/pending'
+                        ? 'bg-gray-100 text-gray-900'
+                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                "
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.75"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                </svg>
+                Pending Approvals
+                <span
+                    v-if="pendingCount > 0"
+                    class="ml-auto text-xs font-semibold px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700"
+                >
+                    {{ pendingCount }}
+                </span>
             </router-link>
 
             <router-link
