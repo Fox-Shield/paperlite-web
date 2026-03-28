@@ -25,12 +25,15 @@ export interface GenerationRequest {
 
 export type DocumentStatus = 'DRAFT' | 'PROCESSING' | 'READY' | 'ERROR'
 
+export type DocumentApprovalStatus = 'NONE' | 'PENDING_APPROVAL' | 'APPROVED' | 'REJECTED'
+
 export interface Document {
     id: number
     name: string
     templateId: number
     templateName: string
     status: DocumentStatus
+    approvalStatus?: DocumentApprovalStatus
     createdAt: string
     updatedAt?: string
 }

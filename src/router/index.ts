@@ -113,6 +113,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/intake/PublicIntakeFormView.vue')
     },
     {
+        path: '/approvals/pending',
+        name: 'pending-approvals',
+        component: () => import('@/views/approvals/PendingApprovalsView.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/clause-library',
         name: 'clause-library',
         component: () => import('@/views/clauses/ClauseLibraryView.vue'),

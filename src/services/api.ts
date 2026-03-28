@@ -34,6 +34,8 @@ import type {
     OrgRole,
     BillingCycle
 } from '@/types/subscription'
+import type { DocumentVersion } from '@/types/document'
+import type { ApprovalRequest, CreateApprovalRequestDTO, SubmitReviewDTO } from '@/types/approval'
 
 const api = axios.create({
     baseURL: '/api',
@@ -177,6 +179,32 @@ export const organizationApi = {
     removeMember: (orgId: number, userId: number) => api.delete(`/organizations/${orgId}/members/${userId}`),
     updateMemberRole: (orgId: number, userId: number, role: OrgRole) =>
         api.put<OrganizationMember>(`/organizations/${orgId}/members/${userId}/role`, { role })
+}
+
+// ── Document Versions (authenticated) ────────────────────────────────────────
+
+export const documentsApi = {
+    getVersions: (documentId: number) => api.get<DocumentVersion[]>(`/documents/${documentId}/versions`),
+    getVersion: (documentId: number, versionId: number) =>
+        api.get<DocumentVersion>(`/documents/${documentId}/versions/${versionId}`),
+    compareVersions: (documentId: number, versionIdA: number, versionIdB: number) =>
+        api.get(`/documents/${documentId}/versions/compare`, { params: { a: versionIdA, b: versionIdB } }),
+    restoreVersion: (documentId: number, versionId: number) =>
+        api.post(`/documents/${documentId}/versions/${versionId}/restore`)
+}
+
+// ── Approvals (authenticated) ─────────────────────────────────────────────────
+
+export const approvalsApi = {
+    getForDocument: (documentId: number) => api.get<ApprovalRequest[]>(`/documents/${documentId}/approvals`),
+    create: (documentId: number, data: CreateApprovalRequestDTO) =>
+        api.post<ApprovalRequest>(`/documents/${documentId}/approvals`, data),
+    getRequest: (documentId: number, requestId: number) =>
+        api.get<ApprovalRequest>(`/documents/${documentId}/approvals/${requestId}`),
+    submitReview: (documentId: number, requestId: number, data: SubmitReviewDTO) =>
+        api.post<ApprovalRequest>(`/documents/${documentId}/approvals/${requestId}/review`, data),
+    withdraw: (documentId: number, requestId: number) => api.delete(`/documents/${documentId}/approvals/${requestId}`),
+    getMyPending: () => api.get<ApprovalRequest[]>('/approvals/pending')
 }
 
 export default api
